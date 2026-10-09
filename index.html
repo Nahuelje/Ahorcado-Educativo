@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ahorcado Educativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="fondo" class="fondo" aria-hidden="true"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div id="destello" aria-hidden="true"></div>
+  <div id="banner" aria-hidden="true"></div>
+
+  <main class="app">
+
+    <!-- MENÚ -->
+    <section id="menu" class="pantalla">
+      <h1>Ahorcado <span>Educativo</span></h1>
+      <p class="sub">Adiviná la palabra, aprendé su significado y subí tu racha.</p>
+
+      <svg class="hero" viewBox="0 0 300 200" aria-hidden="true">
+        <line class="base" x1="40" y1="190" x2="260" y2="190"/>
+        <line x1="80" y1="190" x2="80" y2="20"/>
+        <line x1="80" y1="20" x2="200" y2="20"/>
+        <g class="colgado">
+          <line x1="200" y1="20" x2="200" y2="50"/>
+          <circle cx="200" cy="66" r="16"/>
+          <line x1="200" y1="82" x2="200" y2="130"/>
+          <line x1="200" y1="96" x2="180" y2="115"/>
+          <line x1="200" y1="96" x2="220" y2="115"/>
+          <line x1="200" y1="130" x2="184" y2="160"/>
+          <line x1="200" y1="130" x2="216" y2="160"/>
+        </g>
+      </svg>
+
+      <div class="tarjeta">
+        <label for="categoria">Tema</label>
+        <select id="categoria"></select>
+        <button id="btn-jugar" class="btn primario">▶ Jugar</button>
+        <button id="btn-repaso" class="btn">🔁 Repasar palabras falladas (<span id="n-repaso">0</span>)</button>
+        <button id="btn-ranking" class="btn">🏆 Ranking, diccionario y logros</button>
+      </div>
+
+      <div class="tarjeta como">
+        <h2>Cómo se juega</h2>
+        <ul>
+          <li>Cada victoria sube tu racha: las palabras son más largas y tenés menos intentos.</li>
+          <li>Perder una palabra corta la racha y te quita un corazón. Con 0 corazones termina la partida.</li>
+          <li>Cada 3 victorias ganás un comodín: 💡 pista, 🔤 revelar letra, ❤️ corazón extra o ⏭️ saltar.</li>
+          <li>Al terminar cada palabra ves su significado para aprenderla.</li>
+        </ul>
+      </div>
+
+      <div class="ajustes">
+        <button id="btn-efectos" class="btn chico">Efectos</button>
+        <button id="btn-musica" class="btn chico">Música</button>
+      </div>
+    </section>
+
+    <!-- JUEGO -->
+    <section id="juego" class="pantalla">
+      <header class="barra">
+        <button id="btn-salir" class="btn chico">✕ Salir</button>
+        <span id="nivel" class="chip"></span>
+        <span id="categoria-juego" class="chip"></span>
+      </header>
+
+      <div class="stats">
+        <div><small>Puntos</small><strong id="puntos">0</strong></div>
+        <div><small>Racha</small><strong id="racha">0</strong></div>
+        <div><small>Multiplicador</small><strong id="mult">x1</strong></div>
+        <div><small>Corazones</small><strong id="corazones"></strong></div>
+      </div>
+
+      <div class="progreso-nivel">
+        <div id="barra-nivel"></div>
+      </div>
+      <small id="barra-texto" class="small"></small>
+
+      <div class="tablero">
+        <canvas id="canvas" width="300" height="300"></canvas>
+        <div>
+          <div id="mascota" class="mascota">🙂</div>
+          <div id="palabra" class="palabra"></div>
+          <p id="pista" class="pista"></p>
+          <p id="intentos" class="intentos"></p>
+        </div>
+      </div>
+
+      <div id="comodines" class="comodines"></div>
+      <div id="teclado" class="teclado"></div>
+    </section>
+
+    <!-- RANKING / DICCIONARIO / LOGROS -->
+    <section id="ranking" class="pantalla">
+      <header class="barra">
+        <button id="btn-volver-ranking" class="btn chico">← Menú</button>
+        <h2>Tu progreso</h2>
+      </header>
+      <nav class="tabs">
+        <button class="tab activa" data-tab="puntajes">Ranking</button>
+        <button class="tab" data-tab="diccionario">Diccionario</button>
+        <button class="tab" data-tab="logros">Logros</button>
+      </nav>
+      <div id="tab-puntajes" class="tabpanel activo"></div>
+      <div id="tab-diccionario" class="tabpanel"></div>
+      <div id="tab-logros" class="tabpanel"></div>
+    </section>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal oculto">
+      <div class="caja">
+        <h2 id="modal-titulo"></h2>
+        <div id="modal-texto"></div>
+        <div id="modal-extra"></div>
+        <button id="modal-btn" class="btn primario"></button>
+      </div>
+    </div>
+
+    <div id="toasts"></div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="words.js"></script>
+  <script src="audio.js"></script>
+  <script src="fx.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
